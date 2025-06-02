@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: krishna           # <- MATCH with selector labels and pod template labels
+spec:
+  replicas: 3              # Replicaset for selfhealong of pods, no.of pods should exist at all times
+  selector:
+    matchLabels:
+      app: krishna         # <- MATCH this with pod template labels    [<label key>: <label value>]
+  template:
+    metadata:
+      labels:
+        app: krishna       # <- MATCH this with selector matchLabels   [<label key>: <label value>]
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
